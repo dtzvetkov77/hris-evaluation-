@@ -5,8 +5,8 @@ export interface Candidate {
   number: number;
   name: string;
   position: string;
+  groupNumber?: string;
   notes: string;
-  cvFileName?: string;
   createdAt: string;
   evaluatedAt?: string;
   scores?: CategoryScore[];

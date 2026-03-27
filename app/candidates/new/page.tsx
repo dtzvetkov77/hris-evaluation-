@@ -1,15 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Hash, User, FileText } from "lucide-react";
+import { Hash, User, Users, FileText } from "lucide-react";
 import { saveCandidate, getNextNumber } from "@/lib/store";
 
 export default function NewCandidate() {
   const router = useRouter();
   const [number, setNumber] = useState(1);
   const [name, setName] = useState("");
+  const [groupNumber, setGroupNumber] = useState("");
   const [notes, setNotes] = useState("");
-  const [cvName, setCvName] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function NewCandidate() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return setError("Моля, въведете пълното име на кандидата.");
+    if (!name.trim()) return setError("Моля, въведете пълното ime на кандидата.");
     setError("");
 
     const id = crypto.randomUUID();
@@ -27,8 +27,8 @@ export default function NewCandidate() {
       number,
       name: name.trim(),
       position: "",
+      groupNumber: groupNumber.trim() || undefined,
       notes: notes.trim(),
-      cvFileName: cvName || undefined,
       createdAt: new Date().toISOString(),
     });
     router.push(`/candidates/${id}/evaluate`);
@@ -56,7 +56,7 @@ export default function NewCandidate() {
 
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5">
+            <label className="flex text-sm font-medium text-gray-700 mb-1.5 items-center gap-1.5">
               <User size={14} className="text-gray-400" /> Пълно име
             </label>
             <input
@@ -68,28 +68,24 @@ export default function NewCandidate() {
             />
           </div>
 
-          {/* CV */}
+          {/* Group Number */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Автобиография (CV) <span className="text-gray-400 font-normal">(по избор)</span>
+            <label className="flex text-sm font-medium text-gray-700 mb-1.5 items-center gap-1.5">
+              <Users size={14} className="text-gray-400" /> Номер на група{" "}
+              <span className="text-gray-400 font-normal">(по избор)</span>
             </label>
-            <label className="block cursor-pointer">
-              <div className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center hover:border-blue-300 hover:bg-blue-50 transition-colors">
-                <p className="text-sm text-gray-500">{cvName || "Кликнете за прикачане на CV"}</p>
-                <p className="text-xs text-gray-400 mt-1">PDF, DOC или DOCX · до 5 MB</p>
-              </div>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                className="hidden"
-                onChange={(e) => setCvName(e.target.files?.[0]?.name ?? "")}
-              />
-            </label>
+            <input
+              type="text"
+              placeholder="напр. Група 3"
+              value={groupNumber}
+              onChange={(e) => setGroupNumber(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5">
+            <label className="flex text-sm font-medium text-gray-700 mb-1.5 items-center gap-1.5">
               <FileText size={14} className="text-gray-400" /> Бележки / Допълнителна информация{" "}
               <span className="text-gray-400 font-normal">(по избор)</span>
             </label>

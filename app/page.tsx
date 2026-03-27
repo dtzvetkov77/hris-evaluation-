@@ -9,7 +9,6 @@ import ScoreCircle from "@/components/ScoreCircle";
 export default function Dashboard() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [search, setSearch] = useState("");
-  const [position, setPosition] = useState("Всички позиции");
   const [sort, setSort] = useState("newest");
 
   useEffect(() => {
@@ -17,11 +16,7 @@ export default function Dashboard() {
   }, []);
 
   const filtered = candidates
-    .filter((c) => {
-      const matchSearch = c.name.toLowerCase().includes(search.toLowerCase());
-      const matchPos = position === "Всички позиции" || c.position === position;
-      return matchSearch && matchPos;
-    })
+    .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
       if (sort === "newest") return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       if (sort === "oldest") return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -29,8 +24,6 @@ export default function Dashboard() {
       if (sort === "score_asc") return (a.totalScore ?? 0) - (b.totalScore ?? 0);
       return 0;
     });
-
-  const positions = ["Всички позиции", ...Array.from(new Set(candidates.map((c) => c.position)))];
 
   function handleDelete(id: string) {
     if (!confirm("Сигурни ли сте, че искате да изтриете този кандидат?")) return;
@@ -66,18 +59,6 @@ export default function Dashboard() {
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
-        <div className="relative">
-          <select
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            className="appearance-none pl-3 pr-8 py-2.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {positions.map((p) => (
-              <option key={p}>{p}</option>
-            ))}
-          </select>
-          <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
         <div className="relative">
           <select

@@ -1,15 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Hash, User, Briefcase, FileText } from "lucide-react";
+import { Hash, User, FileText } from "lucide-react";
 import { saveCandidate, getNextNumber } from "@/lib/store";
-import { POSITIONS } from "@/lib/types";
 
 export default function NewCandidate() {
   const router = useRouter();
   const [number, setNumber] = useState(1);
   const [name, setName] = useState("");
-  const [position, setPosition] = useState("");
   const [notes, setNotes] = useState("");
   const [cvName, setCvName] = useState("");
   const [error, setError] = useState("");
@@ -21,7 +19,6 @@ export default function NewCandidate() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return setError("Моля, въведете пълното име на кандидата.");
-    if (!position) return setError("Моля, изберете позиция.");
     setError("");
 
     const id = crypto.randomUUID();
@@ -29,7 +26,7 @@ export default function NewCandidate() {
       id,
       number,
       name: name.trim(),
-      position,
+      position: "",
       notes: notes.trim(),
       cvFileName: cvName || undefined,
       createdAt: new Date().toISOString(),
@@ -69,23 +66,6 @@ export default function NewCandidate() {
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
-
-          {/* Position */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-1.5">
-              <Briefcase size={14} className="text-gray-400" /> Кандидатства за позиция
-            </label>
-            <select
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-            >
-              <option value="">Изберете позиция...</option>
-              {POSITIONS.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
           </div>
 
           {/* CV */}

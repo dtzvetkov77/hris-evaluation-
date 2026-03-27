@@ -112,41 +112,41 @@ export default function ResultsPage() {
 
       {/* Score table */}
       <div className="bg-white rounded-xl border border-gray-200 mb-4 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100">
+        <div className="px-4 md:px-6 py-4 border-b border-gray-100">
           <h2 className="text-sm font-medium text-gray-700">Резултати по категории</h2>
         </div>
         <div className="divide-y divide-gray-50">
           {scores.map((s) => {
             const color = getScoreColor(s.score);
             return (
-              <div key={s.categoryId} className="flex items-center gap-4 px-6 py-3.5">
-                <div className="w-36 flex-shrink-0">
-                  <span className="text-sm font-medium text-gray-800">{s.categoryName}</span>
+              <div key={s.categoryId} className="flex items-center gap-2 md:gap-4 px-4 md:px-6 py-3">
+                <div className="w-28 md:w-36 shrink-0">
+                  <span className="text-xs md:text-sm font-medium text-gray-800">{s.categoryName}</span>
                 </div>
                 <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div className="h-full rounded-full" style={{ width: `${s.score}%`, backgroundColor: color }} />
                 </div>
-                <div className="w-12 text-right font-bold text-sm" style={{ color }}>
+                <div className="w-10 md:w-12 text-right font-bold text-sm" style={{ color }}>
                   {Math.round(s.score)}%
                 </div>
-                <div className="w-16 text-right text-xs text-gray-400">тегло {s.weight}%</div>
-                <div className="w-16 text-right text-xs text-gray-400">
+                <div className="hidden md:block w-16 text-right text-xs text-gray-400">тегло {s.weight}%</div>
+                <div className="hidden md:block w-16 text-right text-xs text-gray-400">
                   +{((s.score * s.weight) / 100).toFixed(1)} т.
                 </div>
               </div>
             );
           })}
           {/* Total */}
-          <div className="flex items-center gap-4 px-6 py-4 bg-gray-50 border-t border-gray-200">
-            <div className="w-36 flex-shrink-0">
+          <div className="flex items-center gap-2 md:gap-4 px-4 md:px-6 py-4 bg-gray-50 border-t border-gray-200">
+            <div className="w-28 md:w-36 shrink-0">
               <span className="text-sm font-bold text-gray-900">Общо</span>
             </div>
             <div className="flex-1" />
-            <div className="w-12 text-right font-bold text-base" style={{ color: getScoreColor(score) }}>
+            <div className="w-10 md:w-12 text-right font-bold text-base" style={{ color: getScoreColor(score) }}>
               {Math.round(score)}%
             </div>
-            <div className="w-16 text-right text-xs text-gray-400">100%</div>
-            <div className="w-16 text-right text-xs font-semibold text-gray-600">
+            <div className="hidden md:block w-16 text-right text-xs text-gray-400">100%</div>
+            <div className="hidden md:block w-16 text-right text-xs font-semibold text-gray-600">
               {score.toFixed(1)} т.
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function ResultsPage() {
       )}
 
       {/* Actions */}
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <Link
           href={`/candidates/${id}/evaluate`}
           className="flex items-center gap-2 text-sm border border-gray-200 hover:bg-gray-50 px-4 py-2.5 rounded-lg text-gray-700 transition-colors"

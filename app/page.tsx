@@ -56,8 +56,8 @@ export default function Dashboard() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-6">
-        <div className="flex-1 relative">
+      <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex-1 min-w-40 relative">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"

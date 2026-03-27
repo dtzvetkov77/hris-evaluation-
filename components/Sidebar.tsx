@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UserPlus, Menu, X } from "lucide-react";
+import { LayoutDashboard, UserPlus, BarChart2, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export default function Sidebar() {
@@ -42,7 +42,8 @@ export default function Sidebar() {
       {/* Mobile bottom nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f1623] border-t border-white/10 flex z-50">
         <BottomNavLink href="/" icon={<LayoutDashboard size={20} />} label="Табло" active={pathname === "/"} />
-        <BottomNavLink href="/candidates/new" icon={<UserPlus size={20} />} label="Нов кандидат" active={pathname === "/candidates/new"} />
+        <BottomNavLink href="/analytics" icon={<BarChart2 size={20} />} label="Табло" active={pathname === "/analytics"} />
+        <BottomNavLink href="/candidates/new" icon={<UserPlus size={20} />} label="Нов" active={pathname === "/candidates/new"} />
       </nav>
     </>
   );
@@ -58,6 +59,7 @@ function SidebarContent({ pathname, onNav }: { pathname: string; onNav?: () => v
       <nav className="flex-1 p-4 space-y-1">
         <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 px-3 pt-2 pb-1">Меню</p>
         <NavLink href="/" icon={<LayoutDashboard size={16} />} label="Табло" active={pathname === "/"} onClick={onNav} />
+        <NavLink href="/analytics" icon={<BarChart2 size={16} />} label="Общо табло" active={pathname === "/analytics"} onClick={onNav} />
         <NavLink href="/candidates/new" icon={<UserPlus size={16} />} label="Нов кандидат" active={pathname === "/candidates/new"} onClick={onNav} />
       </nav>
       <div className="px-6 py-4 border-t border-white/10 text-xs text-white/30">
